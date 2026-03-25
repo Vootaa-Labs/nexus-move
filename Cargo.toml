@@ -1,0 +1,175 @@
+[workspace]
+members = [
+    "crates/nexus-move-types",
+    "crates/nexus-move-bytecode",
+    "crates/nexus-move-runtime",
+    "crates/nexus-move-stdlib",
+    "crates/nexus-move-package",
+    # --- Vendored upstream Move crates (runtime chain, batch 1) ---
+    "vendor/move-borrow-graph",
+    "vendor/move-bytecode-spec",
+    "vendor/move-core-types",
+    "vendor/move-binary-format",
+    "vendor/move-bytecode-verifier",
+    "vendor/move-vm-types",
+    "vendor/move-vm-runtime",
+    "vendor/move-vm-metrics",
+    # --- Vendored upstream Move crates (compiler leaf, batch 2) ---
+    "vendor/move-symbol-pool",
+    "vendor/move-command-line-common",
+    "vendor/move-ir-types",
+    "vendor/move-bytecode-source-map",
+    # --- Vendored upstream Move crates (compiler core, batch 3) ---
+    "vendor/move-bytecode-utils",
+    "vendor/abstract-domain-derive",
+    "vendor/legacy-move-compiler",
+    "vendor/move-coverage",
+    "vendor/move-disassembler",
+    "vendor/move-model",
+    "vendor/move-stackless-bytecode",
+    "vendor/move-compiler-v2",
+]
+default-members = [
+    "crates/nexus-move-types",
+    "crates/nexus-move-bytecode",
+    "crates/nexus-move-runtime",
+    "crates/nexus-move-stdlib",
+    "crates/nexus-move-package",
+]
+resolver = "2"
+
+[workspace.package]
+authors    = ["Nexus Contributors"]
+edition    = "2021"
+homepage   = "https://github.com/vootaa-labs/nexus-move"
+license    = "Apache-2.0"
+publish    = false
+repository = "https://github.com/vootaa-labs/nexus-move"
+rust-version = "1.85"
+version    = "0.1.0"
+
+[workspace.dependencies]
+# --- Nexus-move internal crates ---
+nexus-move-types    = { path = "crates/nexus-move-types" }
+nexus-move-bytecode = { path = "crates/nexus-move-bytecode" }
+nexus-move-runtime  = { path = "crates/nexus-move-runtime" }
+nexus-move-stdlib   = { path = "crates/nexus-move-stdlib" }
+nexus-move-package  = { path = "crates/nexus-move-package" }
+
+# --- Vendored Move crates (batch 1: runtime chain) ---
+move-borrow-graph      = { path = "vendor/move-borrow-graph" }
+move-bytecode-spec     = { path = "vendor/move-bytecode-spec" }
+move-core-types        = { path = "vendor/move-core-types" }
+move-binary-format     = { path = "vendor/move-binary-format" }
+move-bytecode-verifier = { path = "vendor/move-bytecode-verifier" }
+move-vm-types          = { path = "vendor/move-vm-types" }
+move-vm-runtime        = { path = "vendor/move-vm-runtime" }
+move-vm-metrics        = { path = "vendor/move-vm-metrics" }
+
+# --- Vendored Move crates (batch 2: compiler leaf chain) ---
+move-symbol-pool        = { path = "vendor/move-symbol-pool" }
+move-command-line-common = { path = "vendor/move-command-line-common" }
+move-ir-types           = { path = "vendor/move-ir-types" }
+move-bytecode-source-map = { path = "vendor/move-bytecode-source-map" }
+
+# --- Vendored Move crates (batch 3: compiler core chain) ---
+move-bytecode-utils      = { path = "vendor/move-bytecode-utils" }
+abstract-domain-derive   = { path = "vendor/abstract-domain-derive" }
+legacy-move-compiler     = { path = "vendor/legacy-move-compiler" }
+move-coverage            = { path = "vendor/move-coverage" }
+move-disassembler        = { path = "vendor/move-disassembler" }
+move-model               = { path = "vendor/move-model" }
+move-stackless-bytecode  = { path = "vendor/move-stackless-bytecode" }
+move-compiler-v2         = { path = "vendor/move-compiler-v2" }
+
+# --- External dependencies (versions match Nexus root workspace) ---
+# Error handling
+anyhow    = "1"
+thiserror = "1"
+
+# Serialization
+serde       = { version = "1", features = ["derive"] }
+serde_json  = "1"
+serde_bytes = "0.11.6"
+bcs         = "0.1.6"
+
+# Bytes / numerics
+bytes           = "1"
+ethnum          = "1.5.0"
+hashbrown       = "0.14.3"
+num             = "0.4.0"
+primitive-types = { version = "0.10", features = ["impl-serde"] }
+uint            = "0.9.4"
+smallvec        = "1.8.0"
+smallbitvec     = "2.5.1"
+indexmap         = "2.7.0"
+
+# Cryptography / hashing
+blake3 = "1"
+hex    = "0.4"
+sha2   = "0.9.3"
+sha3   = "0.9.1"
+
+# Proc-macro support
+once_cell     = "1.10.0"
+proc-macro2   = "1"
+quote         = "1.0.18"
+syn           = { version = "1.0.92", features = ["derive", "extra-traits"] }
+ref-cast      = "1.0.6"
+variant_count = "1.1.0"
+derivative    = "2.2.0"
+
+# Concurrency / runtime
+crossbeam   = "0.8"
+dashmap     = "6"
+parking_lot = "0.12"
+lazy_static = "1.4.0"
+triomphe    = "0.1.9"
+
+# Data structures / utilities
+difference = "2.0.0"
+dirs-next  = "2.0.0"
+either     = "1"
+im         = "15"
+internment = "0.5"
+itertools  = "0.13"
+log        = "0.4"
+num-bigint = { version = "0.3.2", features = ["rand"] }
+num-traits = "0.2"
+paste      = "1"
+petgraph   = "0.6.5"
+topological-sort = "0.2"
+try_match  = "0.4.2"
+walkdir    = "2.3.3"
+typed-arena = "2.0.2"
+lru        = "0.7.5"
+backtrace  = "0.3.58"
+ambassador = "0.4.1"
+better_any = "0.1.1"
+
+# CLI / reporting
+clap              = { version = "4", features = ["derive"] }
+codespan           = "0.11"
+codespan-reporting = "0.11"
+colored            = "2"
+flexi_logger       = "0.27.4"
+regex              = "1"
+tempfile           = "3"
+serde-reflection   = "0.3"
+
+# Error injection / testing support
+fail   = "0.5.0"
+claims = "0.7"
+
+# Observability
+prometheus = { version = "0.13.3", default-features = false }
+
+# Optional / fuzzing dependencies (needed for feature flags to resolve)
+arbitrary       = { version = "1.3.2", features = ["derive"] }
+dearbitrary     = { version = "1.0.4", features = ["derive"] }
+proptest        = "1"
+proptest-derive = "0.4.0"
+
+[workspace.lints.clippy]
+all = "warn"
+pedantic = "warn"

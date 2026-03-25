@@ -1,0 +1,25 @@
+[package]
+name = "move-stackless-bytecode"
+version = "0.1.0"
+authors = ["Aptos Labs"]
+description = "Move stackless bytecode for analysis"
+license = "Apache-2.0"
+publish = false
+edition = "2021"
+
+[dependencies]
+abstract-domain-derive = { workspace = true }
+anyhow = { workspace = true }
+codespan-reporting = { workspace = true }
+ethnum = { workspace = true }
+im = { workspace = true }
+itertools = { workspace = true }
+log = { workspace = true }
+move-binary-format = { workspace = true }
+move-core-types = { workspace = true }
+move-model = { workspace = true }
+num = { workspace = true }
+paste = { workspace = true }
+petgraph = { workspace = true }
+topological-sort = { workspace = true }
+try_match = { workspace = true }

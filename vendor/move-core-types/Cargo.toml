@@ -1,0 +1,36 @@
+# Vendored from aptos-core @ d3a8cac631df – normalized for nexus-move workspace
+[package]
+name = "move-core-types"
+version = "0.0.4"
+authors = ["Diem Association <opensource@diem.com>"]
+description = "Core types for Move"
+repository = "https://github.com/diem/diem"
+homepage = "https://diem.com"
+license = "Apache-2.0"
+publish = false
+edition = "2021"
+
+[dependencies]
+anyhow = { workspace = true }
+arbitrary = { workspace = true, features = ["derive_arbitrary"], optional = true }
+bcs = { workspace = true }
+bytes = { workspace = true }
+dearbitrary = { workspace = true, optional = true, features = ["derive"] }
+ethnum = { workspace = true }
+hashbrown = { workspace = true }
+hex = { workspace = true }
+num = { workspace = true }
+once_cell = { workspace = true }
+primitive-types = { workspace = true, features = ["impl-serde"] }
+proptest = { workspace = true, optional = true }
+proptest-derive = { workspace = true, optional = true }
+rand = "0.8.5"
+ref-cast = { workspace = true }
+serde = { workspace = true }
+serde_bytes = { workspace = true }
+thiserror = { workspace = true }
+uint = { workspace = true }
+
+[features]
+default = []
+fuzzing = ["proptest", "proptest-derive", "arbitrary", "dearbitrary"]

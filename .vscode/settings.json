@@ -1,0 +1,38 @@
+{
+  "makefile.configureOnOpen": false,
+  "chat.agent.maxRequests": 200,
+  "git.ignoreLimitWarning": true,
+  "rust-analyzer.cargo.allTargets": false,
+  "rust-analyzer.check.allTargets": false,
+  "rust-analyzer.check.command": "check",
+  "rust-analyzer.cargo.extraArgs": [
+    "-p",
+    "nexus-move-types",
+    "-p",
+    "nexus-move-bytecode",
+    "-p",
+    "nexus-move-runtime",
+    "-p",
+    "nexus-move-stdlib",
+    "-p",
+    "nexus-move-package"
+  ],
+  "rust-analyzer.check.overrideCommand": [
+    "cargo",
+    "check",
+    "--message-format=json",
+    "-p",
+    "nexus-move-types",
+    "-p",
+    "nexus-move-bytecode",
+    "-p",
+    "nexus-move-runtime",
+    "-p",
+    "nexus-move-stdlib",
+    "-p",
+    "nexus-move-package"
+  ],
+  "files.watcherExclude": {
+    "**/target/**": true
+  }
+}

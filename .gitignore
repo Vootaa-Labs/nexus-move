@@ -1,0 +1,14 @@
+target/
+
+*.log
+.DS_Store
+
+# Ignore IDE files
+.idea/
+.vscode/*
+!.vscode/settings.json
+
+.env
+.github/*
+!.github/workflows/
+!.github/workflows/ci.yml

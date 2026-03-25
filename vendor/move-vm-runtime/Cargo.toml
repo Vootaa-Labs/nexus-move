@@ -1,0 +1,39 @@
+# Vendored from aptos-core @ d3a8cac631df – normalized for nexus-move workspace
+[package]
+name = "move-vm-runtime"
+version = "0.1.0"
+authors = ["Diem Association <opensource@diem.com>"]
+description = "Core Move execution logic"
+repository = "https://github.com/diem/diem"
+homepage = "https://diem.com"
+license = "Apache-2.0"
+publish = false
+edition = "2021"
+
+[dependencies]
+ambassador = { workspace = true }
+better_any = { workspace = true }
+bytes = { workspace = true }
+claims = { workspace = true }
+fail = { workspace = true }
+hashbrown = { workspace = true }
+lazy_static = { workspace = true }
+lru = { workspace = true }
+move-binary-format = { workspace = true }
+move-bytecode-verifier = { workspace = true }
+move-core-types = { workspace = true }
+move-vm-metrics = { workspace = true }
+move-vm-types = { workspace = true }
+once_cell = { workspace = true }
+parking_lot = { workspace = true }
+serde = { workspace = true }
+triomphe = { workspace = true }
+typed-arena = { workspace = true }
+
+[features]
+default = []
+fuzzing = ["move-vm-types/fuzzing"]
+failpoints = ["fail/failpoints"]
+debugging = []
+testing = []
+stacktrace = []

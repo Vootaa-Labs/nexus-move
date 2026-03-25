@@ -1,0 +1,10 @@
+[package]
+name = "emitter"
+version = "0.0.1"
+upgrade_policy = "compatible"
+
+[addresses]
+emitter_addr = "0xCAFE"
+std = "0x1"
+
+[dependencies]

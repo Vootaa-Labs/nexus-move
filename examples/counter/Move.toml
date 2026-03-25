@@ -1,0 +1,9 @@
+[package]
+name = "counter"
+version = "0.0.1"
+upgrade_policy = "compatible"
+
+[addresses]
+counter_addr = "0xCAFE"
+
+[dependencies]

@@ -1,0 +1,11 @@
+[package]
+name = "move-symbol-pool"
+version = "0.1.0"
+description = "A static, global string table for Move tools"
+license = "Apache-2.0"
+publish = false
+edition = "2021"
+
+[dependencies]
+once_cell = { workspace = true }
+serde = { workspace = true, features = ["derive"] }

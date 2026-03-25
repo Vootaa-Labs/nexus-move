@@ -1,0 +1,14 @@
+{
+  "package_name": "emitter",
+  "package_hash": "9e6c457fc8725de7b8b22629ab76aa536fabf3e27dfd04ce672a5ca108299362",
+  "module_count": 1,
+  "total_bytecode_bytes": 573,
+  "upgrade_policy": "Compatible",
+  "modules": [
+    {
+      "name": "emitter",
+      "size_bytes": 573,
+      "blake3": "9e6c457fc8725de7b8b22629ab76aa536fabf3e27dfd04ce672a5ca108299362"
+    }
+  ]
+}

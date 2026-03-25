@@ -1,0 +1,30 @@
+[package]
+name = "move-model"
+version = "0.1.0"
+authors = ["Aptos Labs"]
+description = "Move source-level model"
+license = "Apache-2.0"
+publish = false
+edition = "2021"
+
+[dependencies]
+anyhow = { workspace = true }
+codespan = { workspace = true }
+codespan-reporting = { workspace = true }
+either = { workspace = true }
+internment = { workspace = true }
+itertools = { workspace = true }
+legacy-move-compiler = { workspace = true }
+log = { workspace = true }
+move-binary-format = { workspace = true }
+move-bytecode-source-map = { workspace = true }
+move-command-line-common = { workspace = true }
+move-core-types = { workspace = true }
+move-disassembler = { workspace = true }
+move-ir-types = { workspace = true }
+move-symbol-pool = { workspace = true }
+num = { workspace = true }
+num-traits = { workspace = true }
+once_cell = { workspace = true }
+regex = { workspace = true }
+serde = { workspace = true }

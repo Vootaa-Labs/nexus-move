@@ -1,0 +1,14 @@
+{
+  "package_name": "counter",
+  "package_hash": "a1af4498c2be2a7cc0fe74523369bcffe52f81b29a927be3686cf5f77f53702f",
+  "module_count": 1,
+  "total_bytecode_bytes": 334,
+  "upgrade_policy": "Compatible",
+  "modules": [
+    {
+      "name": "counter",
+      "size_bytes": 334,
+      "blake3": "a1af4498c2be2a7cc0fe74523369bcffe52f81b29a927be3686cf5f77f53702f"
+    }
+  ]
+}

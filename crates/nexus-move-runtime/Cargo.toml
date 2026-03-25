@@ -1,0 +1,45 @@
+[package]
+name = "nexus-move-runtime"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+blake3 = { workspace = true }
+nexus-move-bytecode.workspace = true
+nexus-move-types.workspace = true
+nexus-move-stdlib.workspace = true
+
+# VM backend (feature-gated)
+bcs               = { workspace = true, optional = true }
+better_any        = { workspace = true, optional = true }
+bytes             = { workspace = true, optional = true }
+move-binary-format     = { workspace = true, optional = true }
+move-bytecode-verifier = { workspace = true, optional = true }
+move-core-types        = { workspace = true, optional = true }
+move-vm-runtime        = { workspace = true, optional = true }
+move-vm-types          = { workspace = true, optional = true }
+nexus-move-package     = { workspace = true, optional = true }
+
+[features]
+default = []
+vm-backend = [
+    "bcs",
+    "better_any",
+    "bytes",
+    "move-binary-format",
+    "move-bytecode-verifier",
+    "move-core-types",
+    "move-vm-runtime",
+    "move-vm-types",
+    "nexus-move-package",
+    "nexus-move-stdlib/vm-backend",
+]
+
+[lib]
+path = "src/lib.rs"
+
+[dev-dependencies]
+nexus-move-package.workspace = true

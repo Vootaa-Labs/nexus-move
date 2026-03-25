@@ -1,0 +1,36 @@
+[package]
+name = "nexus-move-stdlib"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+nexus-move-types.workspace = true
+
+# VM integration (feature-gated)
+better_any         = { workspace = true, optional = true }
+move-core-types    = { workspace = true, optional = true }
+move-vm-runtime    = { workspace = true, optional = true }
+move-vm-types      = { workspace = true, optional = true }
+
+# Crypto (feature-gated)
+sha2     = { workspace = true, optional = true }
+sha3     = { workspace = true, optional = true }
+smallvec = { workspace = true, optional = true }
+
+[features]
+default = []
+vm-backend = [
+    "better_any",
+    "move-core-types",
+    "move-vm-runtime",
+    "move-vm-types",
+    "sha2",
+    "sha3",
+    "smallvec",
+]
+
+[lib]
+path = "src/lib.rs"

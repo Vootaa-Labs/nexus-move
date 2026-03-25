@@ -1,0 +1,49 @@
+ # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: CI
+
+"on":
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.85.0
+          components: rustfmt, clippy, rust-src, llvm-tools-preview
+
+      - name: Restore cargo cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Format check
+        run: make fmt-check
+
+      - name: Clippy
+        run: make clippy
+
+      - name: Default tests
+        run: make test
+
+      - name: VM backend tests
+        run: make test-vm-backend
+
+      - name: Cross-repo compatibility tests
+        run: make test-cross-repo
+
+      - name: Verified compile check
+        run: make check-verified-compile
+
+      - name: Native compile check
+        run: make check-native-compile
+
+      - name: Offline build smoke test
+        run: make smoke-offline-build
