@@ -46,7 +46,7 @@ license    = "Apache-2.0"
 publish    = false
 repository = "https://github.com/vootaa-labs/nexus-move"
 rust-version = "1.85"
-version    = "0.1.0"
+version    = "0.1.1"
 
 [workspace.dependencies]
 # --- Nexus-move internal crates ---

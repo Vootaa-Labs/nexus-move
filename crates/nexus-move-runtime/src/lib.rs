@@ -16,6 +16,9 @@ pub mod abi;
 pub mod move_gas_meter;
 
 #[cfg(feature = "vm-backend")]
+pub mod upstream;
+
+#[cfg(feature = "vm-backend")]
 pub mod vm_backend;
 
 use nexus_move_bytecode::BytecodePolicy;
