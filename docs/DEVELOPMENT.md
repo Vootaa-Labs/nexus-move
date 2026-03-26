@@ -2,61 +2,55 @@
 
 ## Toolchain
 
-- Rust toolchain: `1.85.0` from `rust-toolchain.toml`
-- Required components: `rustfmt`, `clippy`, `rust-src`, `llvm-tools-preview`
-- Primary entry points: `Makefile` targets and the scripts under `scripts/`
+- **Rust**: `1.85.0` (from `rust-toolchain.toml`)
+- **Components**: `rustfmt`, `clippy`, `rust-src`, `llvm-tools-preview`
+
+## Build & Check
+
+```bash
+make check              # cargo check --workspace
+make build              # cargo build --workspace
+make fmt                # cargo fmt --all
+make fmt-check          # format check only
+make clippy             # clippy on first-party crates, -D warnings
+```
+
+## Testing
+
+```bash
+make test               # unit + integration tests (first-party crates only)
+make test-vm-backend    # runtime + stdlib with real Move VM
+make test-cross-repo    # wire-format compatibility assertions
+make test-verified-compile  # package builds with bytecode verification
+make test-native-compile    # package builds with move-compiler-v2
+make test-all-features  # all of the above in sequence
+```
+
+Script-driven validation:
+
+```bash
+make smoke-offline-build   # offline build path + artifact layout assertions
+make validate-compat       # cross-workspace compatibility sweep
+```
 
 ## Workspace Model
 
-The workspace contains two categories of crates:
-
-- first-party `nexus-move-*` crates, which define the supported public surface and the default validation targets
-- vendored upstream Move crates under `vendor/`, which are pinned to a reviewed upstream snapshot and kept as workspace members so dependency edges remain explicit
-
-The vendored crates intentionally do not carry their full upstream `dev-dependencies` surface. That keeps the repository boundary narrow and avoids pulling unrelated upstream test infrastructure into the default Nexus workflow.
+- **Default members**: the 5 `nexus-move-*` crates — these are the primary validation targets.
+- **Vendor members**: 20 upstream Move crates under `vendor/` — workspace members for explicit dependency edges, but not included in default `make test`/`make clippy` targets.
 
 ## rust-analyzer
 
-The workspace includes `.vscode/settings.json` that limits rust-analyzer checks to the first-party crates:
-
-- `nexus-move-types`
-- `nexus-move-bytecode`
-- `nexus-move-runtime`
-- `nexus-move-stdlib`
-- `nexus-move-package`
-
-This reduces diagnostics from vendored test and proptest targets whose upstream `dev-dependencies` are intentionally not part of the repository contract.
-
-## Recommended Commands
-
-Fast local loop:
-
-- `make check`
-- `make clippy`
-- `make test`
-
-Feature-gated validation:
-
-- `make test-vm-backend`
-- `make test-cross-repo`
-- `make check-verified-compile`
-- `make check-native-compile`
-
-Artifact and compatibility checks:
-
-- `make smoke-offline-build`
-- `make validate-compat`
+`.vscode/settings.json` restricts rust-analyzer checks to the 5 first-party crates, suppressing diagnostics from vendored crates with stripped dev-dependencies.
 
 ## Example Artifacts
 
-`examples/counter/` contains committed `nexus-artifact/` output. Those files are not incidental build leftovers; they are used by the offline build smoke test to verify artifact layout and bytecode loading behavior.
+`examples/counter/nexus-artifact/` contains committed build output used by the offline build smoke test. These are test fixtures, not incidental build leftovers.
 
-## When To Touch vendor/
+## Vendor Crate Policy
 
-Only update vendored crates when one of these is true:
+Only touch `vendor/` when:
+- A security or compatibility fix is required
+- A first-party crate needs an upstream capability in scope
+- Deliberate dependency narrowing is documented
 
-- a compatibility or security issue requires a reviewed freeze refresh
-- a first-party crate needs an upstream Move capability that is in scope for this repository boundary
-- dependency narrowing work is being done deliberately and documented in `docs/DEPENDENCY_FREEZE.md`
-
-Routine application work should stay inside the five first-party crates.
+All routine development stays within the 5 first-party crates.

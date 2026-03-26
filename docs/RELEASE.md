@@ -1,46 +1,45 @@
 # Release
 
-## Repository Readiness Checklist
+## Versioning
 
-Before pushing changes intended for the public GitHub repository, run:
+- Follows SemVer: `MAJOR.MINOR.PATCH`
+- Workspace version in root `Cargo.toml` → `[workspace.package] version`
+- Git tag format: `v0.1.1`
+- Consumer pin: `{ git = "https://github.com/vootaa-labs/nexus-move", tag = "v0.1.1" }`
 
-- `make fmt-check`
-- `make clippy`
-- `make test`
-- `make test-vm-backend`
-- `make test-cross-repo`
-- `make check-verified-compile`
-- `make check-native-compile`
-- `make smoke-offline-build`
+## Pre-Release Checklist
 
-Run `make validate-compat` when validating the repository against the adjacent main Nexus repository layout.
+```bash
+make fmt-check
+make clippy
+make test
+make test-vm-backend
+make test-cross-repo
+make check-verified-compile
+make check-native-compile
+make smoke-offline-build
+```
 
-## Publishing Expectations
+## Repository Must Include
 
-The public repository should always contain:
+- Committed `Cargo.lock`
+- CI workflow under `.github/workflows/`
+- Embedded stdlib bytecodes and example artifact fixtures
+- Up-to-date `docs/` documentation
 
-- the committed `Cargo.lock`
-- the current CI workflow under `.github/workflows/`
-- the embedded stdlib and example artifact fixtures needed for offline validation
-- the boundary and dependency documentation under `docs/`
+## Tagging
 
-## Pull Request Expectations
+```bash
+git tag v<VERSION>
+git push origin v<VERSION>
+```
 
-Changes are easier to review and safer to integrate when they stay within one of these buckets:
+Consumers reference the tag in their `Cargo.toml` git dependency.
 
-- first-party facade changes
-- dependency freeze refreshes
-- stdlib or package frontend updates
-- CI, tooling, or documentation maintenance
+## Release Notes Should Cover
 
-Avoid mixing vendor refreshes with unrelated facade behavior changes unless the dependency update is the direct cause of the code change.
-
-## Release Notes Guidance
-
-When describing a release, call out:
-
-- facade or API changes in the five first-party crates
-- dependency freeze updates and upstream pin changes
-- stdlib module inventory changes
-- compile backend changes and feature-flag impacts
-- compatibility or artifact format changes
+- API changes in the 5 first-party crates
+- Vendor freeze updates (upstream commit, rationale)
+- Stdlib module inventory changes
+- Feature flag changes
+- Wire-format or artifact-format breaking changes

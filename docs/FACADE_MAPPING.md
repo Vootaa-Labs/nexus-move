@@ -1,53 +1,107 @@
 # Facade Mapping
 
-This document maps the main Nexus Move integration concepts to the public `nexus-move` surface that is intended to remain stable for downstream callers.
+Consumer crates import exclusively from the 5 `nexus-move-*` facade crates. This document lists the public surface per crate.
 
-## Runtime Mapping
+## nexus-move-types
 
-- `move_adapter::VmConfig` -> `nexus_move_runtime::VmConfig`
-- `move_adapter::NexusStateView` -> `nexus_move_runtime::NexusStateView`
-- `move_adapter::MoveVm` -> `nexus_move_runtime::MoveVm`
-- `move_adapter::MoveExecutor` -> `nexus_move_runtime::MoveExecutor`
-- `move_adapter::VmOutput` -> `nexus_move_runtime::VmOutput`
-- `move_adapter::query::QueryResult` -> `nexus_move_runtime::QueryResult`
-- publisher storage keys -> `nexus_move_runtime::{MODULE_CODE_KEY, MODULE_CODE_HASH_KEY, MODULE_METADATA_KEY}`
+Shared types with no vendor dependencies.
 
-Runtime behavior currently includes:
+| Export | Description |
+|---|---|
+| `VmOutput`, `VmResult`, `VmStatus`, `VmError` | Execution result types |
+| `FunctionCall`, `ScriptExecution`, `ModulePublish` | Transaction intent types |
+| `QueryRequest`, `QueryResult` | View query types |
+| `PublishOutcome`, `StateChange` | Execution effect types |
+| `UpgradePolicy` | Module upgrade policy enum |
 
-- planning backend and real VM backend selection
-- publish, entry-function call, script execution, and query support
-- gas metering and event capture
-- upgrade policy enforcement and ABI hashing
+## nexus-move-bytecode
 
-## Bytecode Mapping
+| Export | Description |
+|---|---|
+| `BytecodePolicy` | Configuration for verification strictness |
+| `verify_publish_bundle` | Bundle-level publish preflight |
+| `VerificationError` | Verification finding type |
 
-- local structural verification policy -> `nexus_move_bytecode::BytecodePolicy`
-- bundle-level preflight checks -> `nexus_move_bytecode::verify_publish_bundle`
-- verification findings -> `nexus_move_bytecode::VerificationError`
+## nexus-move-runtime
 
-## Stdlib Mapping
+### Core API (always available)
 
-- framework address helpers -> `nexus_move_stdlib::framework_address_bytes`
-- embedded framework modules -> `nexus_move_stdlib::get_framework_module`
-- native registry -> `nexus_move_stdlib::natives::native_functions`
+| Export | Description |
+|---|---|
+| `VmConfig` | VM configuration |
+| `MoveExecutor`, `MoveVm`, `PlanningMoveVm` | Executor and VM backend trait/impls |
+| `GasSchedule`, `SimpleGasMeter`, `GasMeter`, `GasExhausted` | Gas metering |
+| `NexusStateView`, `StateReader` | State access traits |
+| `ExecuteSession`, `SessionKind`, `MoveGasSummary` | Session management |
+| `derive_contract_address`, `publish_verified_modules` | Publishing helpers |
+| `resource_key`, `ResourceStore`, `WriteSet` | Resource storage |
+| `MODULE_CODE_KEY`, `MODULE_CODE_HASH_KEY`, `MODULE_METADATA_KEY` | Storage key constants |
+| `BALANCE_KEY`, `MODULE_COUNT_KEY`, `MODULE_DEPLOYER_KEY` | Storage key constants |
+| `RuntimeBootstrap` | Runtime initialization config |
 
-The repository embeds the current Nexus framework module set under `0x1` and serves those bytes directly through the runtime storage bridge.
+### vm-backend Feature
 
-## Package Mapping
+| Export | Description |
+|---|---|
+| `RealMoveVm` | Full Move VM execution backend |
+| `abi_is_compatible`, `compute_module_abi_hash`, `compute_package_abi_hash` | ABI compatibility |
+| `NexusGasMeter` (via `move_gas_meter`) | Full upstream `GasMeter` implementation |
 
-- package build entry point -> `nexus_move_package::build::build_package`
-- `move_adapter::package::UpgradePolicy` -> `nexus_move_package::UpgradePolicy`
-- `move_adapter::package::PackageMetadata` -> `nexus_move_package::PackageMetadata`
-- wallet build defaults -> `nexus_move_package::BuildOptions`
-- lightweight manifest inspection -> `nexus_move_package::inspect_move_toml`
+### upstream Re-export Module (vm-backend)
 
-Compile backend modes exposed by `nexus-move-package`:
+`nexus_move_runtime::upstream::*` — sole import path for upstream Move types:
 
-- precompiled artifact loading
-- verified compile wrapper
-- vendored native compile via `move-compiler-v2`
-- bootstrap subprocess backend for compatibility testing
+```text
+upstream::move_core_types::
+  account_address::AccountAddress
+  effects::{ChangeSet, Op}
+  gas_algebra::InternalGas
+  identifier::{IdentStr, Identifier}
+  language_storage::{ModuleId, StructTag, TypeTag}
+  metadata::Metadata
+  value::MoveTypeLayout
+  vm_status::StatusCode
 
-## Public Boundary Guidance
+upstream::move_binary_format::
+  CompiledModule
+  access::ModuleAccess
+  deserializer::DeserializerConfig
+  errors::{Location, PartialVMError, PartialVMResult, VMResult}
+  file_format_common::{IDENTIFIER_SIZE_MAX, VERSION_MAX}
 
-Downstream callers should prefer the five first-party crates over direct imports from `vendor/`. The vendored crates are intentionally present for freeze control and local compilation, not as the primary public API of the repository.
+upstream::move_vm_runtime::
+  {AsUnsyncModuleStorage, ModuleStorage, RuntimeEnvironment, WithRuntimeEnvironment}
+  data_cache::TransactionDataCache
+  module_traversal::{TraversalContext, TraversalStorage}
+  move_vm::MoveVM
+  native_extensions::NativeContextExtensions
+  native_functions::NativeFunction
+
+upstream::move_vm_types::
+  code::ModuleBytesStorage
+  gas::UnmeteredGasMeter
+  loaded_data::runtime_types::Type
+  natives::function::NativeResult
+  resolver::ResourceResolver
+  values::{Value, values_impl::SignerRef}
+  pop_arg  (macro)
+```
+
+## nexus-move-stdlib
+
+| Export | Description |
+|---|---|
+| `framework_address_bytes` | `0x1` address as bytes |
+| `get_framework_module` | Retrieve embedded module bytecode by name |
+| `natives::native_functions` | Native function registry (requires `vm-backend`) |
+
+## nexus-move-package
+
+| Export | Description |
+|---|---|
+| `BuildOptions`, `CompiledPackage` | Build configuration and output |
+| `PackageMetadata`, `ArtifactManifest` | Package metadata and manifest |
+| `UpgradePolicy` | Re-exported upgrade policy |
+| `build_package` / `orchestrate_build` | Build entry points |
+| `inspect_move_toml` | Lightweight manifest inspection |
+| `CompileBackend` | Backend trait for compile pipeline |
