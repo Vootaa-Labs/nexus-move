@@ -117,7 +117,6 @@ quote         = "1.0.18"
 syn           = { version = "1.0.92", features = ["derive", "extra-traits"] }
 ref-cast      = "1.0.6"
 variant_count = "1.1.0"
-derivative    = "2.2.0"
 
 # Concurrency / runtime
 crossbeam   = "0.8"

@@ -1352,14 +1352,14 @@ dependencies = [
 
 [[package]]
 name = "nexus-move-bytecode"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "nexus-move-types",
 ]
 
 [[package]]
 name = "nexus-move-package"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "bcs",
  "blake3",
@@ -1382,7 +1382,7 @@ dependencies = [
 
 [[package]]
 name = "nexus-move-runtime"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "bcs",
  "better_any",
@@ -1401,7 +1401,7 @@ dependencies = [
 
 [[package]]
 name = "nexus-move-stdlib"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "better_any",
  "move-core-types",
@@ -1415,7 +1415,7 @@ dependencies = [
 
 [[package]]
 name = "nexus-move-types"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "serde",
 ]
