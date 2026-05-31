@@ -5,7 +5,6 @@
 #![allow(clippy::non_canonical_partial_ord_impl)]
 
 use crate::loaded_data::struct_name_indexing::StructNameIndex;
-use derivative::Derivative;
 use itertools::Itertools;
 use move_binary_format::{
     errors::{Location, PartialVMError, PartialVMResult, VMResult},
@@ -24,10 +23,12 @@ use smallbitvec::SmallBitVec;
 use smallvec::{smallvec, SmallVec};
 use std::{
     cell::RefCell,
+    cmp::Ordering,
     cmp::max,
     collections::{btree_map, BTreeMap},
     fmt,
     fmt::Debug,
+    hash::{Hash, Hasher},
     sync::Arc,
 };
 use triomphe::Arc as TriompheArc;
@@ -340,24 +341,37 @@ impl<'a> Iterator for TypePreorderTraversalIter<'a> {
 }
 
 // Cache for the ability of struct. They will be ignored when comparing equality or Ord as they are just used for caching purpose.
-#[derive(Derivative)]
-#[derivative(Debug, Clone, Eq, Hash, PartialEq, Ord, PartialOrd)]
+#[derive(Debug, Clone)]
 pub struct AbilityInfo {
-    #[derivative(
-        PartialEq = "ignore",
-        Hash = "ignore",
-        Ord = "ignore",
-        PartialOrd = "ignore"
-    )]
     base_ability_set: AbilitySet,
-
-    #[derivative(
-        PartialEq = "ignore",
-        Hash = "ignore",
-        Ord = "ignore",
-        PartialOrd = "ignore"
-    )]
     phantom_ty_args_mask: SmallBitVec,
+}
+
+impl PartialEq for AbilityInfo {
+    fn eq(&self, _other: &Self) -> bool {
+        true
+    }
+}
+
+impl Eq for AbilityInfo {}
+
+impl Hash for AbilityInfo {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        // Keep legacy behavior from derivative(ignore): all values hash identically.
+        0u8.hash(state);
+    }
+}
+
+impl Ord for AbilityInfo {
+    fn cmp(&self, _other: &Self) -> Ordering {
+        Ordering::Equal
+    }
+}
+
+impl PartialOrd for AbilityInfo {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
 }
 
 impl AbilityInfo {
