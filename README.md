@@ -2,7 +2,7 @@
 
 Move smart-contract subsystem for [Nexus](https://github.com/vootaa-labs/nexus-node). Provides runtime execution, bytecode verification, stdlib, and package tooling as a standalone dependency.
 
-**Version**: 0.1.1 · **Rust**: 1.85.0 · **License**: Apache-2.0
+**Version**: 0.1.2 · **Rust**: 1.85.0 · **License**: Apache-2.0
 
 ## Quick Start (Consumer)
 
@@ -10,16 +10,16 @@ In your workspace `Cargo.toml`:
 
 ```toml
 [dependencies]
-nexus-move-runtime  = { git = "https://github.com/vootaa-labs/nexus-move", tag = "v0.1.1" }
-nexus-move-types    = { git = "https://github.com/vootaa-labs/nexus-move", tag = "v0.1.1" }
-nexus-move-bytecode = { git = "https://github.com/vootaa-labs/nexus-move", tag = "v0.1.1" }
-nexus-move-package  = { git = "https://github.com/vootaa-labs/nexus-move", tag = "v0.1.1" }
+nexus-move-runtime  = { git = "https://github.com/vootaa-labs/nexus-move", tag = "v0.1.2" }
+nexus-move-types    = { git = "https://github.com/vootaa-labs/nexus-move", tag = "v0.1.2" }
+nexus-move-bytecode = { git = "https://github.com/vootaa-labs/nexus-move", tag = "v0.1.2" }
+nexus-move-package  = { git = "https://github.com/vootaa-labs/nexus-move", tag = "v0.1.2" }
 ```
 
 Enable the real Move VM backend:
 
 ```toml
-nexus-move-runtime = { git = "...", tag = "v0.1.1", features = ["vm-backend"] }
+nexus-move-runtime = { git = "...", tag = "v0.1.2", features = ["vm-backend"] }
 ```
 
 > **Rule**: Consumer crates depend only on the five `nexus-move-*` facade crates. Never depend on `vendor/` crates directly.
