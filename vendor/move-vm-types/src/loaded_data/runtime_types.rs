@@ -23,8 +23,8 @@ use smallbitvec::SmallBitVec;
 use smallvec::{smallvec, SmallVec};
 use std::{
     cell::RefCell,
-    cmp::Ordering,
     cmp::max,
+    cmp::Ordering,
     collections::{btree_map, BTreeMap},
     fmt,
     fmt::Debug,
