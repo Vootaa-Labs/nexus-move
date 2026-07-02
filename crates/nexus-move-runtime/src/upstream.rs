@@ -58,6 +58,11 @@ pub mod move_binary_format {
     pub mod errors {
         pub use move_binary_format::errors::{Location, PartialVMError, PartialVMResult, VMResult};
     }
+    pub mod file_format {
+        pub use move_binary_format::file_format::{
+            Bytecode, CodeUnit, CompiledScript, Signature, SignatureIndex, SignatureToken,
+        };
+    }
     pub mod file_format_common {
         pub use move_binary_format::file_format_common::{IDENTIFIER_SIZE_MAX, VERSION_MAX};
     }
