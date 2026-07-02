@@ -67,7 +67,8 @@ pub mod move_binary_format {
 
 pub mod move_vm_runtime {
     pub use move_vm_runtime::{
-        AsUnsyncModuleStorage, ModuleStorage, RuntimeEnvironment, WithRuntimeEnvironment,
+        AsUnsyncCodeStorage, AsUnsyncModuleStorage, CodeStorage, ModuleStorage, RuntimeEnvironment,
+        WithRuntimeEnvironment,
     };
 
     pub mod data_cache {
